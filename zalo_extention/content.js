@@ -1,9 +1,16 @@
 async function translateText(text) {
-    const response = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(text)}`
-    );
-    const data = await response.json();
-    return data[0].map(item => item[0]).join('');
+    return new Promise((resolve) => {
+        chrome.storage.local.get(["language"], async (result) => {
+            const targetLang = result.language || "en";
+
+            const response = await fetch(
+                `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`
+            );
+
+            const data = await response.json();
+            resolve(data[0].map(item => item[0]).join(''));
+        });
+    });
 }
 
 function isVietnamese(text) {
