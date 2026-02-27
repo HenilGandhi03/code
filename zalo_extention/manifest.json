@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Zalo Auto Translator",
+  "version": "1.0",
+  "description": "Adds English translation below Vietnamese messages on Zalo Web.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://chat.zalo.me/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.zalo.me/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
